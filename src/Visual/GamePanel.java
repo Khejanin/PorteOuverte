@@ -18,6 +18,7 @@ public class GamePanel extends javax.swing.JPanel {
 
     private Game game;
     /** Creates new form GamePanel */
+    
     public GamePanel() {
         initComponents();
         game = new Game(getWidth(), getHeight());

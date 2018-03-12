@@ -17,11 +17,11 @@ import java.awt.event.ComponentEvent;
  */
 public class Game{
     
-    private Point maxTiles;
-    private Point panelSize;
+    private Point maxTiles = new Point();
+    private Point panelSize = new Point();
     public static int TILE_WIDTH,TILE_HEIGHT;
     private Player player;
-    private ResizeListener resizeListener;
+    private ResizeListener resizeListener = new ResizeListener();
     
     public Game(int width,int height){
         setPanelSize(width, height);
@@ -33,6 +33,15 @@ public class Game{
     
     public void draw(Graphics g){
         player.draw(g);
+        
+    }
+    
+    public void drawGrid(Graphics g){
+        for (int i = 0; i < maxTiles.x; i++) {
+            for (int j = 0; j < maxTiles.y; j++) {
+               
+            }
+        }
     }
     
     private void setPanelSize(int width,int height){
@@ -41,12 +50,17 @@ public class Game{
     }
     
     private void calculateTileSize(){
-        
+        int size = Math.min(panelSize.x, panelSize.y);
+        TILE_WIDTH = size/50;
+        TILE_HEIGHT = size/50;
+        maxTiles.x = panelSize.x / TILE_WIDTH;
+        maxTiles.y = panelSize.y / TILE_HEIGHT;
     }
     
     class ResizeListener extends ComponentAdapter{
         public void componentResized(ComponentEvent e){
             setPanelSize(e.getComponent().getWidth(), e.getComponent().getHeight());
+            System.out.println("resize");
         }
     }
 }
