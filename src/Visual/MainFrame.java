@@ -16,6 +16,9 @@ public class MainFrame extends javax.swing.JFrame {
      */
     public MainFrame() {
         initComponents();
+        setSize(800,800);
+        gamePanel1.setSize(800, 800);
+        setResizable(false);
     }
 
     /**

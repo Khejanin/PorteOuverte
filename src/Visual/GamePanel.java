@@ -7,6 +7,8 @@
 package Visual;
 
 import Game.Game;
+import java.awt.Color;
+import java.awt.Graphics;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 
@@ -24,6 +26,18 @@ public class GamePanel extends javax.swing.JPanel {
         game = new Game(getWidth(), getHeight());
         addComponentListener(game.getResizeListener());
     }
+
+    @Override
+    protected void paintComponent(Graphics g) {
+        g.setColor(Color.WHITE);
+        g.fillRect(0, 0, getWidth(), getHeight());
+        g.setColor(Color.BLACK);
+        if(game != null){
+            game.draw(g);
+        }
+    }
+    
+    
 
     
     

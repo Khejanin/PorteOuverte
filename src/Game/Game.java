@@ -6,6 +6,7 @@
 package Game;
 
 import Player.Player;
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.event.ComponentAdapter;
@@ -20,11 +21,12 @@ public class Game{
     private Point maxTiles = new Point();
     private Point panelSize = new Point();
     public static int TILE_WIDTH,TILE_HEIGHT;
-    private Player player;
+    private Player player = new Player();
     private ResizeListener resizeListener = new ResizeListener();
     
     public Game(int width,int height){
         setPanelSize(width, height);
+        calculateTileSize();
     }
 
     public ResizeListener getResizeListener() {
@@ -33,13 +35,14 @@ public class Game{
     
     public void draw(Graphics g){
         player.draw(g);
-        
+        drawGrid(g);
     }
     
     public void drawGrid(Graphics g){
+        g.setColor(Color.BLACK);
         for (int i = 0; i < maxTiles.x; i++) {
             for (int j = 0; j < maxTiles.y; j++) {
-               
+               g.drawRect(i*TILE_WIDTH, j*TILE_HEIGHT ,TILE_WIDTH,TILE_HEIGHT);
             }
         }
     }
@@ -53,13 +56,16 @@ public class Game{
         int size = Math.min(panelSize.x, panelSize.y);
         TILE_WIDTH = size/50;
         TILE_HEIGHT = size/50;
-        maxTiles.x = panelSize.x / TILE_WIDTH;
-        maxTiles.y = panelSize.y / TILE_HEIGHT;
+//        maxTiles.x = panelSize.x / TILE_WIDTH;
+//        maxTiles.y = panelSize.y / TILE_HEIGHT;
+        maxTiles.x = 10;
+        maxTiles.y = 10;
     }
     
     class ResizeListener extends ComponentAdapter{
         public void componentResized(ComponentEvent e){
             setPanelSize(e.getComponent().getWidth(), e.getComponent().getHeight());
+            calculateTileSize();
             System.out.println("resize");
         }
     }

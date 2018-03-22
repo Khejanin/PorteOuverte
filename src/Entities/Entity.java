@@ -15,7 +15,7 @@ import java.awt.geom.Point2D;
  */
 public abstract class Entity {
     
-    protected Point2D pos;
+    protected Point2D pos = new Point(0,0);
     protected Double velocity;
     protected int width,height;
     public static final int MOVE_DOWN = -1,MOVE_UP = 1,MOVE_LEFT = 2,MOVE_RIGHT = 3;
