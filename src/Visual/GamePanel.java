@@ -6,7 +6,7 @@
 
 package Visual;
 
-import Game.Game;
+import Maze.Maze;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.ComponentAdapter;
@@ -18,12 +18,15 @@ import java.awt.event.ComponentEvent;
  */
 public class GamePanel extends javax.swing.JPanel {
 
-    private Game game;
+    private Maze maze;
     /** Creates new form GamePanel */
     
     public GamePanel() {
         initComponents();
-        game = new Game(getWidth(), getHeight());
+    }
+    
+    public void setGame(Maze game){
+        this.maze = game;
         addComponentListener(game.getResizeListener());
     }
 
@@ -32,8 +35,8 @@ public class GamePanel extends javax.swing.JPanel {
         g.setColor(Color.WHITE);
         g.fillRect(0, 0, getWidth(), getHeight());
         g.setColor(Color.BLACK);
-        if(game != null){
-            game.draw(g);
+        if(maze != null){
+            maze.draw(g,getWidth(),getHeight());
         }
     }
     

@@ -15,11 +15,11 @@ import java.awt.Graphics;
 public class Player extends Entities.Entity{
 
     @Override
-    public void draw(Graphics g) {
+    public void draw(Graphics g,int size) {
         g.setColor(Color.RED);
-        g.fillOval((int)pos.getX(),(int)pos.getY(), width, height);
+        g.fillOval((int)pos.getX(),(int)pos.getY(),size,size);
         g.setColor(Color.BLACK);
-        g.drawOval((int)pos.getX(),(int)pos.getY(), width, height);
+        g.drawOval((int)pos.getX(),(int)pos.getY(), size, size);
     }
     
     public void move(int direction){

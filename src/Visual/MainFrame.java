@@ -5,20 +5,27 @@
  */
 package Visual;
 
+import Maze.Maze;
+import com.sun.glass.events.KeyEvent;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.Timer;
+
 /**
  *
  * @author Khejanin
  */
 public class MainFrame extends javax.swing.JFrame {
 
+    private Maze maze;
+   
     /**
      * Creates new form MainFrame
      */
     public MainFrame() {
         initComponents();
-        setSize(800,800);
-        gamePanel1.setSize(800, 800);
-        setResizable(false);
+        maze = new Maze(gamePanel1.getWidth(),gamePanel1.getHeight());
+        gamePanel1.setGame(maze);
     }
 
     /**
@@ -33,8 +40,18 @@ public class MainFrame extends javax.swing.JFrame {
         gamePanel1 = new Visual.GamePanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                formKeyPressed(evt);
+            }
+        });
 
         gamePanel1.setBackground(new java.awt.Color(102, 102, 255));
+        gamePanel1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                gamePanel1KeyPressed(evt);
+            }
+        });
 
         javax.swing.GroupLayout gamePanel1Layout = new javax.swing.GroupLayout(gamePanel1);
         gamePanel1.setLayout(gamePanel1Layout);
@@ -60,6 +77,22 @@ public class MainFrame extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void gamePanel1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_gamePanel1KeyPressed
+        if(evt.getKeyCode() == KeyEvent.VK_SPACE){
+            maze.generate(gamePanel1.getWidth(), gamePanel1.getHeight());
+        }
+        System.out.println("true   ");
+        repaint();
+    }//GEN-LAST:event_gamePanel1KeyPressed
+
+    private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
+        if(evt.getKeyCode() == KeyEvent.VK_SPACE){
+            maze.generate(gamePanel1.getWidth(), gamePanel1.getHeight());
+        }
+        System.out.println("true   ");
+        repaint();
+    }//GEN-LAST:event_formKeyPressed
 
     /**
      * @param args the command line arguments

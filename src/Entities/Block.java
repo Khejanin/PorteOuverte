@@ -5,20 +5,23 @@
  */
 package Entities;
 
+import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Point;
-import java.awt.geom.Point2D;
 
 /**
  *
- * @author Khejanin
+ * @author nogal156
  */
-public abstract class Entity {
+public abstract class Block {
     
-    protected Point2D pos = new Point(0,0);
-    protected Double velocity;
-    public static final int MOVE_DOWN = -1,MOVE_UP = 1,MOVE_LEFT = 2,MOVE_RIGHT = 3;
+    protected int posX = 0,posY = 0;
+    protected Color color;
+    protected boolean isWalkable;
     
+    public Block(int posX,int posY){
+        this.posX = posX;
+        this.posY = posY;
+    }
     
     public abstract void draw(Graphics g,int size);
 }
