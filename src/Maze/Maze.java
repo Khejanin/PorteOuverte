@@ -21,7 +21,7 @@ import java.awt.event.ComponentEvent;
  */
 public class Maze{
     
-    private static int SIZE = 50;
+    private static int SIZE = 25;
     private Point panelSize = new Point();
     public static int TILE_SIZE = 0;
     private Player player = new Player();
@@ -30,9 +30,7 @@ public class Maze{
     private static final int HORIZONTAL = 1,VERTICAL = 3;
     
     public Maze(int width,int height){
-        setPanelSize(width, height);
-        calculateTileSize();
-        maze(0, SIZE, 0, SIZE,new Point(0,0));
+        generate(width, height);
 //        generateGrass();
     }
 
@@ -40,7 +38,8 @@ public class Maze{
         setPanelSize(width, height);
         calculateTileSize();
         clear();
-        maze(0, SIZE, 0, SIZE,new Point(0,0));
+        drawBorder(0, SIZE, 0, SIZE);
+        maze(1, SIZE-1, 1, SIZE-1,new Point(0,0));
 //        generateGrass();
     }
     
@@ -150,6 +149,24 @@ public class Maze{
 //    }
 //    
     public void maze(int startX,int endX,int startY,int endY,Point forbidden){
+        drawBorder(startX,endX,startY,endY);
+        generateMaze(startX, endX, startY, endY, forbidden);
+    }
+    
+    public void drawBorder(int startX,int endX,int startY,int endY){
+        if(blocks != null){
+            for (int i = 0; i < SIZE; i++) {
+                blocks[i][0] = new Brick(i, 0);
+                blocks[0][i] = new Brick(0,i);
+                blocks[i][SIZE-1] = new Brick(i,SIZE-1);
+                if(i != SIZE-2)
+                    blocks[SIZE-1][i] = new Brick(SIZE-1,i);
+            }
+        }
+    }
+    
+    public void generateMaze(int startX,int endX,int startY,int endY,Point forbidden){
+        
         if(endX- startX > 4 || endY - startY > 4){
             if( endX - startX > 2 && endY - startY > 2){
                 int randomX = (int)(Math.random()*(endX-startX-2))+startX+1;
@@ -194,12 +211,10 @@ public class Maze{
                     }
     //                else blocks[randomX][i] = new Grass(randomX, i);
                 }
-                forbidden.x = randomX;
-                forbidden.y = randomY;
-                maze(startX, randomX, startY, randomY, forbidden);
-                maze(randomX+1, endX, startY, randomY, forbidden);
-                maze(startX, randomX, randomY+1, endY, forbidden);
-                maze(randomX+1, endX, randomY+1, endY, forbidden);
+                maze(startX, randomX, startY, randomY, new Point(hole1,hole3));
+                maze(randomX+1, endX, startY, randomY, new Point(hole2,hole3));
+                maze(startX, randomX, randomY+1, endY, new Point(hole1,hole4));
+                maze(randomX+1, endX, randomY+1, endY, new Point(hole2,hole4));
             }
         }
     }
