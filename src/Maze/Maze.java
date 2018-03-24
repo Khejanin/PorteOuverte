@@ -14,6 +14,7 @@ import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.util.ArrayList;
 
 /**
  *
@@ -21,7 +22,7 @@ import java.awt.event.ComponentEvent;
  */
 public class Maze{
     
-    private static int SIZE = 25;
+    private static int SIZE = 50;
     private Point panelSize = new Point();
     public static int TILE_SIZE = 0;
     private Player player = new Player();
@@ -157,12 +158,32 @@ public class Maze{
         if(blocks != null){
             for (int i = 0; i < SIZE; i++) {
                 blocks[i][0] = new Brick(i, 0);
-                blocks[0][i] = new Brick(0,i);
+                if(i != 1)
+                    blocks[0][i] = new Brick(0,i);
                 blocks[i][SIZE-1] = new Brick(i,SIZE-1);
                 if(i != SIZE-2)
                     blocks[SIZE-1][i] = new Brick(SIZE-1,i);
             }
         }
+    }
+    
+    public boolean findPath(Point current,ArrayList<Point> path){
+        if(!path.contains(current)){
+            path.add(current);
+            if(blocks[current.x+1][current.y].isWalkable()){
+                
+            }
+            if(blocks[current.x][current.y+1].isWalkable()){
+                
+            }
+            if(blocks[current.x-1][current.y].isWalkable()){
+                
+            }
+            if(blocks[current.x][current.y-1].isWalkable()){
+                
+            }
+        }
+        return true; //nofehler
     }
     
     public void generateMaze(int startX,int endX,int startY,int endY,Point forbidden){

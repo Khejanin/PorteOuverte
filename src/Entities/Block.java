@@ -23,5 +23,9 @@ public abstract class Block {
         this.posY = posY;
     }
     
+    public boolean isWalkable(){
+        return isWalkable;
+    }
+    
     public abstract void draw(Graphics g,int size);
 }
