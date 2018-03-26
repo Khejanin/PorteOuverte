@@ -7,6 +7,7 @@ package Maze;
 
 import Entities.Block;
 import Entities.Brick;
+import Entities.Floor;
 import Entities.Grass;
 import Player.Player;
 import java.awt.Color;
@@ -41,6 +42,8 @@ public class Maze{
         clear();
         drawBorder(0, SIZE, 0, SIZE);
         maze(1, SIZE-1, 1, SIZE-1,new Point(0,0));
+        fill();
+        findPath(new Point(0, 1), new ArrayList());
 //        generateGrass();
     }
     
@@ -61,7 +64,9 @@ public class Maze{
         if(blocks != null){
             for (int i = 0; i < SIZE; i++) {
                 for (int j = 0; j < SIZE; j++) {
-                    blocks[i][j] = new Brick(i, j);
+                    if(blocks[i][j] == null){
+                        blocks[i][j] = new Floor(i, j);
+                    }
                 }
             }
         }
@@ -167,24 +172,62 @@ public class Maze{
         }
     }
     
+    public boolean findSackGassen(Point current,ArrayList<Point> path){
+        if(!path.contains(current)){
+            path.add(current);
+            blocks[current.x][current.y] = new Grass(current.x, current.y);
+            if(current.x < SIZE-1 && blocks[current.x+1][current.y].isWalkable()){
+                findSackGassen(new Point(current.x+1,current.y),path);
+            }
+            if(current.y < SIZE-1 && blocks[current.x][current.y+1].isWalkable()){
+                findSackGassen(new Point(current.x,current.y+1),path);
+            }
+            if(current.x > 0 && blocks[current.x-1][current.y].isWalkable()){
+                findSackGassen(new Point(current.x-1,current.y),path);
+            }
+            if(current.y > 0 && blocks[current.x][current.y-1].isWalkable()){
+                findSackGassen(new Point(current.x,current.y-1),path);
+            }
+            
+            return true;
+        }
+        else {
+            blocks[current.x][current.y] = new Floor(current.x, current.y);
+            return false;
+        }
+    }
+    
     public boolean findPath(Point current,ArrayList<Point> path){
         if(!path.contains(current)){
             path.add(current);
-            if(blocks[current.x+1][current.y].isWalkable()){
-                return findPath(new Point(current.x+1,current.y),path);
+//            blocks[current.x][current.y] = new Grass(current.x, current.y);
+            if(current.x < SIZE-1 && blocks[current.x+1][current.y].isWalkable()){
+                if (findPath(new Point(current.x+1,current.y),path)){
+                    blocks[current.x][current.y] = new Grass(current.x, current.y);
+                }
             }
-            if(blocks[current.x][current.y+1].isWalkable()){
-                
+            if(current.y < SIZE-1 && blocks[current.x][current.y+1].isWalkable()){
+                if(findPath(new Point(current.x,current.y+1),path)){
+                    blocks[current.x][current.y] = new Grass(current.x, current.y);
+                }
             }
-            if(blocks[current.x-1][current.y].isWalkable()){
-                
+            if(current.x > 0 && blocks[current.x-1][current.y].isWalkable()){
+                if(findPath(new Point(current.x-1,current.y),path)){
+                    blocks[current.x][current.y] = new Grass(current.x, current.y);
+                }
             }
-            if(blocks[current.x][current.y-1].isWalkable()){
-                
+            if(current.y > 0 && blocks[current.x][current.y-1].isWalkable()){
+                if(findPath(new Point(current.x,current.y-1),path)){
+                    blocks[current.x][current.y] = new Grass(current.x, current.y);
+                }
             }
+            
             return true;
         }
-        else return false;
+        else {
+            blocks[current.x][current.y] = new Floor(current.x, current.y);
+            return false;
+        }
     }
     
     public void generateMaze(int startX,int endX,int startY,int endY,Point forbidden){

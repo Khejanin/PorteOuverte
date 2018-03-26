@@ -12,21 +12,18 @@ import java.awt.Graphics;
  *
  * @author nogal156
  */
-public class Grass extends Block{
+public class Floor extends Block{
 
-    public Grass(int x, int y) {
-        super(x, y);
-        color = Color.GREEN;
+    public Floor(int posX, int posY) {
+        super(posX, posY);
+        color = Color.GRAY;
         isWalkable = true;
     }
 
     @Override
-    public void draw(Graphics g,int size) {
-        g.setColor(Color.GRAY);
-        g.fillRect(posX*size, posY*size, size, size);
+    public void draw(Graphics g, int size) {
         g.setColor(color);
-        g.fillRect(posX*size+5, posY*size+5, size-10, size-10);
+        g.fillRect(posX*size, posY*size, size, size);
     }
-    
     
 }
