@@ -171,7 +171,7 @@ public class Maze{
         if(!path.contains(current)){
             path.add(current);
             if(blocks[current.x+1][current.y].isWalkable()){
-                
+                return findPath(new Point(current.x+1,current.y),path);
             }
             if(blocks[current.x][current.y+1].isWalkable()){
                 
@@ -182,8 +182,9 @@ public class Maze{
             if(blocks[current.x][current.y-1].isWalkable()){
                 
             }
+            return true;
         }
-        return true; //nofehler
+        else return false;
     }
     
     public void generateMaze(int startX,int endX,int startY,int endY,Point forbidden){
